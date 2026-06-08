@@ -1,0 +1,1002 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Communicator &mdash; Weltevreden Park Primary School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       oklch(98% 0.006 80);
+      --surface:  oklch(100% 0 0);
+      --fg:       oklch(22% 0.08 255);
+      --muted:    oklch(52% 0.012 250);
+      --border:   oklch(91% 0.006 250);
+      --accent:   oklch(46% 0.19 258);
+      --accent-d: oklch(36% 0.19 258);
+      --gold:     oklch(68% 0.14 82);
+      --gold-d:   oklch(56% 0.14 78);
+      --dark:     oklch(20% 0.07 255);
+      --success:  oklch(50% 0.18 145);
+      --warn:     oklch(68% 0.16 78);
+      --font-d:   'Lora', Georgia, serif;
+      --font-b:   'Inter', -apple-system, system-ui, sans-serif;
+      --font-m:   ui-monospace, 'JetBrains Mono', monospace;
+      --r: 8px; --w: 1200px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-b); font-size: 16px; line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; gap: 28px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-logo { width: 42px; height: 42px; object-fit: contain; }
+    .nav-name { display: flex; flex-direction: column; line-height: 1; }
+    .nav-school { font-family: var(--font-d); font-size: 13.5px; font-weight: 600; color: var(--fg); }
+    .nav-motto { font-size: 10.5px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 3px; }
+    .nav-links { display: flex; gap: 2px; flex: 1; justify-content: center; }
+    .nav-links a { padding: 7px 14px; border-radius: var(--r); font-size: 14px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover { color: var(--fg); background: var(--bg); }
+    .nav-links a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: var(--r); background: var(--accent); color: white; font-size: 13.5px; font-weight: 500; transition: background 0.15s; flex-shrink: 0; }
+    .nav-cta:hover { background: var(--accent-d); }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 9px; font-size: 14.5px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; font-family: var(--font-b); }
+    .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-d); border-color: var(--accent-d); }
+    .btn-outline { background: transparent; color: var(--accent); border-color: var(--accent); }
+    .btn-outline:hover { background: var(--accent); color: white; }
+    .btn-ghost { background: transparent; color: var(--muted); border-color: var(--border); }
+    .btn-ghost:hover { color: var(--fg); border-color: var(--muted); }
+    .btn-gold { background: var(--gold); color: white; border-color: var(--gold); }
+    .btn-gold:hover { background: var(--gold-d); border-color: var(--gold-d); }
+    .btn-ghost-white { background: transparent; color: white; border-color: oklch(100% 0 0 / 0.45); }
+    .btn-ghost-white:hover { background: white; color: var(--accent-d); border-color: white; }
+    .btn-lg { padding: 13px 28px; font-size: 15px; border-radius: 10px; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; border-radius: 7px; }
+
+    /* LAYOUT */
+    .container { max-width: var(--w); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .section--surface { background: var(--surface); }
+    .section--dark { background: var(--dark); }
+    .eyebrow { font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(26px, 3vw, 36px); font-weight: 700; line-height: 1.2; color: var(--fg); margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background:
+        radial-gradient(ellipse at 85% 15%, oklch(68% 0.14 82 / 0.14) 0%, transparent 55%),
+        linear-gradient(148deg, oklch(42% 0.18 258) 0%, oklch(26% 0.13 272) 100%);
+      padding: 64px 0 56px;
+    }
+    .page-hero-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; }
+    .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: oklch(68% 0.14 82 / 0.18); border: 1px solid oklch(68% 0.14 82 / 0.35); color: oklch(90% 0.08 82); padding: 5px 14px; border-radius: 100px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; margin-bottom: 18px; }
+    .page-hero h1 { font-family: var(--font-d); font-size: clamp(30px, 3.5vw, 44px); font-weight: 700; color: white; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 14px; }
+    .page-hero p { font-size: 16.5px; color: oklch(88% 0.005 240); max-width: 560px; line-height: 1.7; margin-bottom: 28px; }
+    .page-hero-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 500; border: 1.5px solid oklch(100% 0 0 / 0.25); color: oklch(88% 0.005 240); cursor: pointer; transition: all 0.15s; }
+    .tab-pill:hover, .tab-pill.active { background: white; color: var(--accent-d); border-color: white; }
+    .tab-pill svg { flex-shrink: 0; }
+
+    /* SECTION ANCHOR NAV */
+    .anchor-nav { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 68px; z-index: 90; }
+    .anchor-nav-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; display: flex; gap: 0; }
+    .anchor-nav a { padding: 14px 20px; font-size: 13.5px; font-weight: 500; color: var(--muted); border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; display: flex; align-items: center; gap: 7px; }
+    .anchor-nav a:hover { color: var(--fg); }
+    .anchor-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       SCHOOL CALENDAR
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .cal-layout { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    .cal-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+    .cal-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-chip { padding: 6px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 500; border: 1.5px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-chip.on { background: var(--accent); color: white; border-color: var(--accent); }
+    .filter-chip.on-gold { background: var(--gold); color: white; border-color: var(--gold); }
+    .filter-chip.on-green { background: var(--success); color: white; border-color: var(--success); }
+
+    /* Term blocks */
+    .term-block { margin-bottom: 36px; }
+    .term-block-header { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--fg); border-radius: 10px 10px 0 0; }
+    .term-num { font-family: var(--font-d); font-size: 13px; font-weight: 700; color: white; }
+    .term-dates-label { font-size: 12.5px; color: oklch(75% 0.005 250); font-family: var(--font-m); }
+    .term-events { border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; }
+    .event-row { display: flex; align-items: flex-start; gap: 0; border-bottom: 1px solid var(--border); transition: background 0.12s; }
+    .event-row:last-child { border-bottom: none; }
+    .event-row:hover { background: oklch(96% 0.004 258); }
+    .event-date-col { width: 100px; flex-shrink: 0; padding: 14px 16px; border-right: 1px solid var(--border); }
+    .event-date-day { font-family: var(--font-m); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .event-date-num { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: var(--fg); line-height: 1.1; }
+    .event-date-mon { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .event-body { flex: 1; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; }
+    .event-tag { display: inline-flex; padding: 3px 10px; border-radius: 100px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 2px; }
+    .tag-term    { background: oklch(46% 0.19 258 / 0.1); color: var(--accent); }
+    .tag-exam    { background: oklch(60% 0.20 38 / 0.1);  color: oklch(50% 0.20 38); }
+    .tag-holiday { background: oklch(50% 0.18 145 / 0.1); color: var(--success); }
+    .tag-event   { background: oklch(68% 0.14 82 / 0.12); color: var(--gold-d); }
+    .tag-sport   { background: oklch(46% 0.17 290 / 0.1); color: oklch(46% 0.17 290); }
+    .event-info { flex: 1; }
+    .event-name { font-size: 14.5px; font-weight: 500; color: var(--fg); margin-bottom: 2px; }
+    .event-detail { font-size: 13px; color: var(--muted); }
+
+    /* Upcoming aside */
+    .cal-aside { position: sticky; top: 124px; }
+    .aside-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .aside-card-header { padding: 16px 20px; background: var(--fg); }
+    .aside-card-title { font-family: var(--font-d); font-size: 14px; font-weight: 600; color: white; }
+    .aside-card-sub { font-size: 11.5px; color: oklch(65% 0.005 250); margin-top: 2px; }
+    .upcoming-list { }
+    .upcoming-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+    .upcoming-item:last-child { border-bottom: none; }
+    .upcoming-bubble { width: 42px; height: 42px; border-radius: 10px; background: oklch(46% 0.19 258 / 0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .upcoming-bubble-day { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600; }
+    .upcoming-bubble-num { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .upcoming-name { font-size: 13.5px; font-weight: 500; color: var(--fg); margin-bottom: 2px; }
+    .upcoming-meta { font-size: 12px; color: var(--muted); }
+    .download-card { margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .download-card h4 { font-family: var(--font-d); font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+    .dl-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .dl-item:last-child { border-bottom: none; }
+    .dl-icon { width: 36px; height: 36px; border-radius: 8px; background: oklch(60% 0.20 38 / 0.1); display: flex; align-items: center; justify-content: center; color: oklch(50% 0.20 38); flex-shrink: 0; }
+    .dl-name { font-size: 13px; font-weight: 500; flex: 1; }
+    .dl-size { font-size: 11.5px; color: var(--muted); font-family: var(--font-m); }
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NEWS & EVENTS
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .news-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; gap: 16px; flex-wrap: wrap; }
+    .news-cats { display: flex; gap: 8px; flex-wrap: wrap; }
+    .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .news-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+    .news-card:hover { box-shadow: 0 6px 28px oklch(22% 0.08 255 / 0.09); transform: translateY(-3px); }
+    .news-card--featured { grid-column: span 3; display: grid; grid-template-columns: 2fr 3fr; border-radius: 14px; }
+    .news-thumb { aspect-ratio: 16/9; background: linear-gradient(145deg, oklch(90% 0.012 258) 0%, oklch(84% 0.018 260) 100%); display: flex; align-items: flex-end; position: relative; overflow: hidden; }
+    .news-thumb--featured { aspect-ratio: unset; min-height: 280px; }
+    .news-thumb-label { font-family: var(--font-m); font-size: 10px; color: oklch(88% 0.005 250); letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: oklch(22% 0.08 255 / 0.45); width: 100%; }
+    .news-cat-pill { position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 100px; font-size: 10.5px; font-weight: 600; }
+    .cat-achievement { background: var(--gold); color: white; }
+    .cat-news       { background: var(--accent); color: white; }
+    .cat-sport      { background: oklch(44% 0.22 25); color: white; }
+    .cat-event      { background: var(--success); color: white; }
+    .news-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .news-body--featured { padding: 32px 28px; }
+    .news-meta { font-size: 12px; color: var(--muted); margin-bottom: 8px; font-family: var(--font-m); }
+    .news-headline { font-family: var(--font-d); font-size: 16px; font-weight: 600; line-height: 1.35; margin-bottom: 10px; }
+    .news-headline--featured { font-size: 22px; margin-bottom: 14px; }
+    .news-excerpt { font-size: 13.5px; color: var(--muted); line-height: 1.65; flex: 1; }
+    .news-footer { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .news-read-more { font-size: 13px; font-weight: 500; color: var(--accent); display: flex; align-items: center; gap: 5px; transition: gap 0.15s; }
+    .news-read-more:hover { gap: 8px; text-decoration: underline; }
+
+    /* Pagination */
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 48px; }
+    .page-btn { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; border: 1.5px solid var(--border); color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .page-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .page-btn.current { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       NEWSLETTER
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .newsletter-layout { display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
+    .nl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .nl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px; transition: box-shadow 0.2s, transform 0.2s; }
+    .nl-card:hover { box-shadow: 0 4px 20px oklch(22% 0.08 255 / 0.08); transform: translateY(-2px); }
+    .nl-cover { aspect-ratio: 4/3; border-radius: 8px; background: linear-gradient(165deg, oklch(90% 0.012 258) 0%, oklch(84% 0.018 260) 100%); display: flex; align-items: flex-end; overflow: hidden; }
+    .nl-cover-label { width: 100%; padding: 10px 12px; background: oklch(22% 0.08 255 / 0.45); font-family: var(--font-m); font-size: 10px; color: oklch(88% 0.005 250); letter-spacing: 0.06em; text-transform: uppercase; }
+    .nl-meta { display: flex; align-items: center; justify-content: space-between; }
+    .nl-term-badge { padding: 3px 10px; border-radius: 100px; background: oklch(46% 0.19 258 / 0.1); color: var(--accent); font-size: 11px; font-weight: 600; }
+    .nl-date { font-size: 12px; color: var(--muted); font-family: var(--font-m); }
+    .nl-title { font-family: var(--font-d); font-size: 16px; font-weight: 600; line-height: 1.35; }
+    .nl-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .nl-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+    /* Subscribe card */
+    .subscribe-card { background: var(--fg); border-radius: 14px; padding: 28px; color: white; }
+    .subscribe-card h3 { font-family: var(--font-d); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .subscribe-card p { font-size: 13.5px; color: oklch(75% 0.005 250); line-height: 1.65; margin-bottom: 20px; }
+    .subscribe-form { display: flex; flex-direction: column; gap: 10px; }
+    .subscribe-input { padding: 11px 14px; border-radius: var(--r); border: 1.5px solid oklch(38% 0.06 255); background: oklch(28% 0.06 255); color: white; font-size: 14px; font-family: var(--font-b); outline: none; transition: border-color 0.15s; }
+    .subscribe-input::placeholder { color: oklch(55% 0.008 250); }
+    .subscribe-input:focus { border-color: var(--accent); }
+    .app-promo { margin-top: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .app-promo h4 { font-family: var(--font-d); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .app-promo p { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+    .app-stores { display: flex; flex-direction: column; gap: 10px; }
+    .app-store-btn { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; border: 1.5px solid var(--border); transition: border-color 0.15s, box-shadow 0.15s; }
+    .app-store-btn:hover { border-color: var(--accent); box-shadow: 0 2px 10px oklch(46% 0.19 258 / 0.12); }
+    .app-store-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--fg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .app-store-text { flex: 1; }
+    .app-store-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .app-store-name { font-size: 14px; font-weight: 600; color: var(--fg); margin-top: 1px; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background:
+        radial-gradient(ellipse at 90% 50%, oklch(68% 0.14 82 / 0.12) 0%, transparent 55%),
+        linear-gradient(148deg, oklch(42% 0.18 258) 0%, oklch(26% 0.13 272) 100%);
+      padding: 72px 0;
+    }
+    .cta-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .cta-title { font-family: var(--font-d); font-size: clamp(24px, 2.8vw, 34px); font-weight: 700; color: white; line-height: 1.2; margin-bottom: 10px; }
+    .cta-sub { font-size: 15.5px; color: oklch(84% 0.006 240); line-height: 1.65; max-width: 480px; }
+    .cta-actions { display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer { background: oklch(18% 0.07 255); color: oklch(80% 0.006 250); }
+    .footer-main { padding: 60px 0 44px; }
+    .footer-grid { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.4fr; gap: 40px; }
+    .f-logo { width: 50px; margin-bottom: 14px; }
+    .f-name { font-family: var(--font-d); font-size: 17px; font-weight: 600; color: white; margin-bottom: 4px; }
+    .f-motto { font-size: 11.5px; color: oklch(58% 0.010 250); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+    .f-line { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: oklch(70% 0.008 250); margin-bottom: 9px; }
+    .f-line svg { flex-shrink: 0; margin-top: 2px; }
+    .f-col h4 { font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; color: oklch(55% 0.010 250); margin-bottom: 16px; font-weight: 600; }
+    .f-links { display: flex; flex-direction: column; gap: 9px; }
+    .f-links a { font-size: 13.5px; color: oklch(70% 0.008 250); transition: color 0.15s; }
+    .f-links a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid oklch(32% 0.06 255); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+    .f-copy { font-size: 12px; color: oklch(50% 0.009 250); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .cal-layout { grid-template-columns: 1fr; }
+      .cal-aside { position: static; }
+      .news-grid { grid-template-columns: repeat(2, 1fr); }
+      .news-card--featured { grid-column: span 2; grid-template-columns: 1fr 1fr; }
+      .newsletter-layout { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .cta-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .section { padding: 48px 0; }
+      .news-grid { grid-template-columns: 1fr; }
+      .news-card--featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .news-thumb--featured { min-height: 180px; }
+      .nl-grid { grid-template-columns: 1fr; }
+      .anchor-nav { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* HAMBURGER / MOBILE NAV */
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; padding: 8px; border: none; background: none; cursor: pointer; margin-left: auto; border-radius: var(--r); transition: background 0.15s; }
+    .nav-burger:hover { background: var(--bg); }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px oklch(22% 0.08 255 / 0.10); z-index: 99; padding: 12px 16px 20px; }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a { display: block; padding: 11px 14px; border-radius: var(--r); font-size: 15px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-mobile a:hover { color: var(--fg); background: var(--bg); }
+    .nav-mobile a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-mobile .nav-mobile-cta { display: block; margin-top: 10px; padding: 12px 18px; background: var(--accent); color: white; border-radius: var(--r); font-size: 14.5px; font-weight: 500; text-align: center; }
+    .nav-mobile .nav-mobile-cta:hover { background: var(--accent-d); }
+    @media (max-width: 640px) {
+      .nav-burger { display: flex; }
+      .nav { position: sticky; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="WPPS Crest">
+      <div class="nav-name">
+        <span class="nav-school">Weltevreden Park Primary</span>
+        <span class="nav-motto">Growth in Harmony</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+      <li><a href="fees.html">School Fees</a></li>
+      <li><a href="terms.html">School Terms</a></li>
+      <li><a href="communicator.html" class="active">Communicator</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <a class="nav-cta" href="admissions.html">Apply for 2027</a>
+  </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+
+      <a href="index.html">Home</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="fees.html">School Fees</a>
+      <a href="terms.html">School Terms</a>
+      <a href="communicator.html" class="active">Communicator</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="admissions.html" class="nav-mobile-cta">Apply for 2027</a>
+    </div>
+
+<!-- STICKY SECTION NAV -->
+<nav class="anchor-nav">
+  <div class="anchor-nav-inner">
+    <a href="#calendar" class="active">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      School Calendar
+    </a>
+    <a href="#news">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><line x1="18" y1="14" x2="12" y2="14"/><line x1="18" y1="10" x2="12" y2="10"/><line x1="16" y1="18" x2="12" y2="18"/></svg>
+      News &amp; Events
+    </a>
+    <a href="#newsletters">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Newsletters
+    </a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">Parent &amp; Community Hub</div>
+    <h1>School Communicator</h1>
+    <p>Your central connection to everything happening at Welties &mdash; term dates, school events, news, and newsletters, all in one place.</p>
+    <div class="page-hero-tabs">
+      <a href="#calendar" class="tab-pill active">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+        School Calendar
+      </a>
+      <a href="#news" class="tab-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2z"/></svg>
+        News &amp; Events
+      </a>
+      <a href="#newsletters" class="tab-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Newsletters
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     SECTION 1: SCHOOL CALENDAR
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section class="section section--surface" id="calendar">
+  <div class="container">
+    <div class="cal-layout">
+      <div>
+        <div class="eyebrow">Academic Calendar 2026</div>
+        <h2 class="section-title">School Calendar</h2>
+        <p class="section-sub" style="margin-bottom: 28px;">Term dates, public holidays, exam windows, and key school events for 2026. Filter by type below.</p>
+
+        <div class="cal-header">
+          <div class="cal-filter">
+            <span class="filter-chip on">All</span>
+            <span class="filter-chip">Term dates</span>
+            <span class="filter-chip">Exams</span>
+            <span class="filter-chip">Holidays</span>
+            <span class="filter-chip">Events</span>
+            <span class="filter-chip">Sport</span>
+          </div>
+        </div>
+
+        <!-- TERM 1 -->
+        <div class="term-block">
+          <div class="term-block-header">
+            <span class="term-num">Term 1</span>
+            <span class="term-dates-label">14 January &mdash; 27 March 2026</span>
+          </div>
+          <div class="term-events">
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Wed</div>
+                <div class="event-date-num">14</div>
+                <div class="event-date-mon">Jan</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 1 begins</div>
+                  <div class="event-detail">First day of school &middot; All grades</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Mon</div>
+                <div class="event-date-num">02</div>
+                <div class="event-date-mon">Mar</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-exam">Exam</span>
+                <div class="event-info">
+                  <div class="event-name">Term 1 assessments begin</div>
+                  <div class="event-detail">Formal assessment period &middot; Grades 4&mdash;7</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">21</div>
+                <div class="event-date-mon">Mar</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-holiday">Holiday</span>
+                <div class="event-info">
+                  <div class="event-name">Human Rights Day</div>
+                  <div class="event-detail">Public holiday &middot; No school</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">27</div>
+                <div class="event-date-mon">Mar</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 1 ends</div>
+                  <div class="event-detail">Last day of school &middot; Early closure TBC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TERM 2 -->
+        <div class="term-block">
+          <div class="term-block-header">
+            <span class="term-num">Term 2</span>
+            <span class="term-dates-label">8 April &mdash; 26 June 2026</span>
+          </div>
+          <div class="term-events">
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Wed</div>
+                <div class="event-date-num">08</div>
+                <div class="event-date-mon">Apr</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 2 begins</div>
+                  <div class="event-detail">First day of Term 2 &middot; All grades</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">01</div>
+                <div class="event-date-mon">May</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-holiday">Holiday</span>
+                <div class="event-info">
+                  <div class="event-name">Workers' Day</div>
+                  <div class="event-detail">Public holiday &middot; No school</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Wed</div>
+                <div class="event-date-num">27</div>
+                <div class="event-date-mon">May</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-event">Event</span>
+                <div class="event-info">
+                  <div class="event-name">Inter-house Athletics Day</div>
+                  <div class="event-detail">School sports grounds &middot; Full day event &mdash; date TBC</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">16</div>
+                <div class="event-date-mon">Jun</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-holiday">Holiday</span>
+                <div class="event-info">
+                  <div class="event-name">Youth Day</div>
+                  <div class="event-detail">Public holiday &middot; No school</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">26</div>
+                <div class="event-date-mon">Jun</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 2 ends</div>
+                  <div class="event-detail">Last day of school &middot; Report cards distributed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TERM 3 -->
+        <div class="term-block">
+          <div class="term-block-header">
+            <span class="term-num">Term 3</span>
+            <span class="term-dates-label">21 July &mdash; 23 September 2026</span>
+          </div>
+          <div class="term-events">
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Tue</div>
+                <div class="event-date-num">21</div>
+                <div class="event-date-mon">Jul</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 3 begins</div>
+                  <div class="event-detail">First day of Term 3 &middot; All grades</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Mon</div>
+                <div class="event-date-num">10</div>
+                <div class="event-date-mon">Aug</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-event">Event</span>
+                <div class="event-info">
+                  <div class="event-name">Welties Winter Concert</div>
+                  <div class="event-detail">The Lex Morton Hall &middot; Time TBC</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Mon</div>
+                <div class="event-date-num">24</div>
+                <div class="event-date-mon">Aug</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-exam">Exam</span>
+                <div class="event-info">
+                  <div class="event-name">Term 3 assessments begin</div>
+                  <div class="event-detail">Formal assessment period &middot; Grades 4&mdash;7</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Wed</div>
+                <div class="event-date-num">23</div>
+                <div class="event-date-mon">Sep</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 3 ends</div>
+                  <div class="event-detail">Last day of school &middot; Report cards distributed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TERM 4 -->
+        <div class="term-block">
+          <div class="term-block-header">
+            <span class="term-num">Term 4</span>
+            <span class="term-dates-label">6 October &mdash; 9 December 2026</span>
+          </div>
+          <div class="term-events">
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Tue</div>
+                <div class="event-date-num">06</div>
+                <div class="event-date-mon">Oct</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 4 begins</div>
+                  <div class="event-detail">First day of Term 4 &middot; All grades</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Mon</div>
+                <div class="event-date-num">02</div>
+                <div class="event-date-mon">Nov</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-exam">Exam</span>
+                <div class="event-info">
+                  <div class="event-name">Grade 7 final examinations begin</div>
+                  <div class="event-detail">End-of-year exams &middot; Grades 6&mdash;7</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Fri</div>
+                <div class="event-date-num">04</div>
+                <div class="event-date-mon">Dec</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-event">Event</span>
+                <div class="event-info">
+                  <div class="event-name">Grade 7 Farewell</div>
+                  <div class="event-detail">The Lex Morton Hall &middot; Details TBC</div>
+                </div>
+              </div>
+            </div>
+            <div class="event-row">
+              <div class="event-date-col">
+                <div class="event-date-day">Wed</div>
+                <div class="event-date-num">09</div>
+                <div class="event-date-mon">Dec</div>
+              </div>
+              <div class="event-body">
+                <span class="event-tag tag-term">Term</span>
+                <div class="event-info">
+                  <div class="event-name">Term 4 ends</div>
+                  <div class="event-detail">Last day of school 2026</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASIDE: Upcoming + Downloads -->
+      <div class="cal-aside">
+        <div class="aside-card">
+          <div class="aside-card-header">
+            <div class="aside-card-title">Upcoming This Term</div>
+            <div class="aside-card-sub">Next 4 key dates</div>
+          </div>
+          <div class="upcoming-list">
+            <div class="upcoming-item">
+              <div class="upcoming-bubble"><span class="upcoming-bubble-day">Jul</span><span class="upcoming-bubble-num">21</span></div>
+              <div>
+                <div class="upcoming-name">Term 3 begins</div>
+                <div class="upcoming-meta">First day back &middot; All grades</div>
+              </div>
+            </div>
+            <div class="upcoming-item">
+              <div class="upcoming-bubble"><span class="upcoming-bubble-day">Aug</span><span class="upcoming-bubble-num">10</span></div>
+              <div>
+                <div class="upcoming-name">Winter Concert</div>
+                <div class="upcoming-meta">Lex Morton Hall &middot; Time TBC</div>
+              </div>
+            </div>
+            <div class="upcoming-item">
+              <div class="upcoming-bubble"><span class="upcoming-bubble-day">Aug</span><span class="upcoming-bubble-num">24</span></div>
+              <div>
+                <div class="upcoming-name">Term 3 assessments</div>
+                <div class="upcoming-meta">Grades 4&mdash;7 formal assessment</div>
+              </div>
+            </div>
+            <div class="upcoming-item">
+              <div class="upcoming-bubble"><span class="upcoming-bubble-day">Sep</span><span class="upcoming-bubble-num">23</span></div>
+              <div>
+                <div class="upcoming-name">Term 3 ends</div>
+                <div class="upcoming-meta">Report cards distributed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="download-card" style="margin-top:16px">
+          <h4>Download Calendar</h4>
+          <div class="dl-item">
+            <div class="dl-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="dl-name">Academic Calendar 2026.pdf</div>
+            <span class="dl-size">&mdash;</span>
+          </div>
+          <div class="dl-item">
+            <div class="dl-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="dl-name">Add to Google Calendar</div>
+            <span class="dl-size">.ics</span>
+          </div>
+          <a href="#" class="btn btn-primary btn-sm" style="margin-top:14px;width:100%;justify-content:center">Download PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     SECTION 2: NEWS & EVENTS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section class="section" id="news">
+  <div class="container">
+    <div class="news-header">
+      <div>
+        <div class="eyebrow">Stay Informed</div>
+        <h2 class="section-title" style="margin-bottom:0">News &amp; Events</h2>
+      </div>
+      <div class="news-cats">
+        <span class="filter-chip on">All</span>
+        <span class="filter-chip">Achievements</span>
+        <span class="filter-chip">Sport</span>
+        <span class="filter-chip">Events</span>
+        <span class="filter-chip">Announcements</span>
+      </div>
+    </div>
+
+    <div class="news-grid">
+
+      <!-- FEATURED -->
+      <article class="news-card news-card--featured">
+        <div class="news-thumb news-thumb--featured">
+          <span class="news-cat-pill cat-achievement">Achievement</span>
+          <div class="news-thumb-label">Photo placeholder &mdash; school event</div>
+        </div>
+        <div class="news-body news-body--featured">
+          <div class="news-meta">15 May 2026 &middot; Achievements</div>
+          <h3 class="news-headline news-headline--featured">Welties Learners Shine at Regional Maths Olympiad</h3>
+          <p class="news-excerpt">A group of Grade 6 and 7 learners represented Weltevreden Park Primary at the Regional Mathematics Olympiad and returned with outstanding results &mdash; including two gold distinctions and a top-10 overall placing. The school community congratulates the team and their teachers for the exceptional preparation and dedication shown throughout the year.</p>
+          <div class="news-footer">
+            <a href="#" class="news-read-more">Read full story <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <span style="font-size:12px;color:var(--muted)">5 min read</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="news-card">
+        <div class="news-thumb">
+          <span class="news-cat-pill cat-sport">Sport</span>
+          <div class="news-thumb-label">Photo placeholder</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">8 May 2026 &middot; Sport</div>
+          <h3 class="news-headline">Eagles House Win the Inter-House Swimming Gala</h3>
+          <p class="news-excerpt">Eagles topped the points tally at this year's inter-house swimming gala, held at the school pool. Falcons and Kestrels put in strong performances throughout the day.</p>
+          <div class="news-footer">
+            <a href="#" class="news-read-more">Read more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="news-card">
+        <div class="news-thumb">
+          <span class="news-cat-pill cat-event">Event</span>
+          <div class="news-thumb-label">Photo placeholder</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">2 May 2026 &middot; Events</div>
+          <h3 class="news-headline">Winter Concert Dates Confirmed for Term 3</h3>
+          <p class="news-excerpt">The annual Welties Winter Concert will take place in the Lex Morton Hall during Term 3. Parents and community members are warmly invited to attend. More details will follow via the School Communicator app.</p>
+          <div class="news-footer">
+            <a href="#" class="news-read-more">Read more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="news-card">
+        <div class="news-thumb">
+          <span class="news-cat-pill cat-news">Announcement</span>
+          <div class="news-thumb-label">Photo placeholder</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">28 Apr 2026 &middot; Announcements</div>
+          <h3 class="news-headline">Grade 1 Applications for 2027 Open in July</h3>
+          <p class="news-excerpt">The GDE online admissions portal for Grade 1 placements in 2027 will open in late July. Parents of prospective learners are encouraged to register early at gdeadmissions.gov.za.</p>
+          <div class="news-footer">
+            <a href="admissions.html" class="news-read-more">Admissions info <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="news-card">
+        <div class="news-thumb">
+          <span class="news-cat-pill cat-achievement">Achievement</span>
+          <div class="news-thumb-label">Photo placeholder</div>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">14 Apr 2026 &middot; Achievements</div>
+          <h3 class="news-headline">Welties Netball Team Advances to Regional Finals</h3>
+          <p class="news-excerpt">After a series of strong performances at district level, the Welties netball team has qualified for the Gauteng regional finals. The school congratulates the squad and coaching staff.</p>
+          <div class="news-footer">
+            <a href="#" class="news-read-more">Read more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <div class="page-btn current">1</div>
+      <div class="page-btn">2</div>
+      <div class="page-btn">3</div>
+      <div class="page-btn" style="width:auto;padding:0 14px;">Next &rarr;</div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     SECTION 3: NEWSLETTERS
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<section class="section section--surface" id="newsletters">
+  <div class="container">
+    <div class="newsletter-layout">
+      <div>
+        <div class="eyebrow">Parent Communications</div>
+        <h2 class="section-title">Newsletters</h2>
+        <p class="section-sub" style="margin-bottom:36px">Downloadable newsletters for parents and community members. New editions are published each term.</p>
+
+        <div class="nl-grid">
+          <div class="nl-card">
+            <div class="nl-cover"><div class="nl-cover-label">Newsletter cover &mdash; Term 2 2026</div></div>
+            <div class="nl-meta"><span class="nl-term-badge">Term 2 &middot; 2026</span><span class="nl-date">June 2026</span></div>
+            <div class="nl-title">Welties Term 2 Newsletter 2026</div>
+            <p class="nl-desc">Highlights from Term 2 &mdash; achievements, sport results, upcoming events, and important notices for parents.</p>
+            <div class="nl-actions">
+              <a href="#" class="btn btn-primary btn-sm">Download PDF</a>
+              <a href="#" class="btn btn-ghost btn-sm">Preview</a>
+            </div>
+          </div>
+
+          <div class="nl-card">
+            <div class="nl-cover"><div class="nl-cover-label">Newsletter cover &mdash; Term 1 2026</div></div>
+            <div class="nl-meta"><span class="nl-term-badge">Term 1 &middot; 2026</span><span class="nl-date">March 2026</span></div>
+            <div class="nl-title">Welties Term 1 Newsletter 2026</div>
+            <p class="nl-desc">Welcome back edition &mdash; new staff introductions, upcoming events, and key information for the year ahead.</p>
+            <div class="nl-actions">
+              <a href="#" class="btn btn-primary btn-sm">Download PDF</a>
+              <a href="#" class="btn btn-ghost btn-sm">Preview</a>
+            </div>
+          </div>
+
+          <div class="nl-card">
+            <div class="nl-cover" style="background:linear-gradient(165deg, oklch(90% 0.012 80) 0%, oklch(84% 0.018 78) 100%)"><div class="nl-cover-label">Newsletter cover &mdash; Term 4 2025</div></div>
+            <div class="nl-meta"><span class="nl-term-badge" style="background:oklch(68% 0.14 82 / 0.12);color:var(--gold-d)">Term 4 &middot; 2025</span><span class="nl-date">December 2025</span></div>
+            <div class="nl-title">Welties Term 4 Newsletter 2025</div>
+            <p class="nl-desc">Year-end edition &mdash; Grade 7 farewells, academic highlights, and a look back at the 2025 school year.</p>
+            <div class="nl-actions">
+              <a href="#" class="btn btn-outline btn-sm">Download PDF</a>
+              <a href="#" class="btn btn-ghost btn-sm">Preview</a>
+            </div>
+          </div>
+
+          <div class="nl-card">
+            <div class="nl-cover" style="background:linear-gradient(165deg, oklch(90% 0.012 80) 0%, oklch(84% 0.018 78) 100%)"><div class="nl-cover-label">Newsletter cover &mdash; Term 3 2025</div></div>
+            <div class="nl-meta"><span class="nl-term-badge" style="background:oklch(68% 0.14 82 / 0.12);color:var(--gold-d)">Term 3 &middot; 2025</span><span class="nl-date">September 2025</span></div>
+            <div class="nl-title">Welties Term 3 Newsletter 2025</div>
+            <p class="nl-desc">Mid-year round-up &mdash; sport achievements, cultural events, and academic milestones from Term 3.</p>
+            <div class="nl-actions">
+              <a href="#" class="btn btn-outline btn-sm">Download PDF</a>
+              <a href="#" class="btn btn-ghost btn-sm">Preview</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px;text-align:center">
+          <a href="#" class="btn btn-ghost" style="margin:0 auto">View all newsletters &rarr;</a>
+        </div>
+      </div>
+
+      <!-- ASIDE: Subscribe + App -->
+      <div>
+        <div class="subscribe-card">
+          <h3>Stay in the loop</h3>
+          <p>Get new newsletters and school announcements delivered directly to your inbox as soon as they're published.</p>
+          <div class="subscribe-form">
+            <input class="subscribe-input" type="text" placeholder="Your name">
+            <input class="subscribe-input" type="email" placeholder="Email address">
+            <a href="#" class="btn btn-gold" style="justify-content:center">Subscribe to updates</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <div>
+      <div class="eyebrow" style="color:oklch(80% 0.10 82)">Join the Welties Family</div>
+      <div class="cta-title">Applications for 2026 Are Now Open</div>
+      <p class="cta-sub">Grade 1 applications close 29 August 2025. Apply online via the GDE portal &mdash; then collect your school application form from our office.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="admissions.html" class="btn btn-gold btn-lg">Admissions Guide</a>
+      <a href="contact.html" class="btn btn-ghost-white btn-lg">Contact the School</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="f-logo" src="assets/logo.png" alt="WPPS Crest">
+          <div class="f-name">Weltevreden Park Primary School</div>
+          <div class="f-motto">Growth in Harmony &middot; Est. 1987</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>41 Cockspur Road, Weltevreden Park, 1709</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>(011) 679 5625/6 &middot; (011) 475 5451/7937</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>admin@welties.org.za</div>
+        </div>
+        <div class="f-col">
+          <h4>Navigate</h4>
+          <div class="f-links"><a href="index.html">Home</a><a href="admissions.html">Admissions</a><a href="fees.html">School Fees</a><a href="communicator.html">Communicator</a><a href="contact.html">Contact Us</a></div>
+        </div>
+        <div class="f-col">
+          <h4>School</h4>
+          <div class="f-links"><a href="#">Our History</a><a href="#">Management Team</a><a href="#">Our Staff</a><a href="index.html#about">Mission Statement</a><a href="#">Code of Conduct</a></div>
+        </div>
+        <div class="f-col">
+          <h4>Pre-Primary</h4>
+          <div class="f-links"><a href="admissions.html#grader">Grade R Admissions</a><a href="fees.html#grader-fees">Grade R Fees</a><a href="contact.html">Contact Pre-Primary</a></div>
+          <h4 style="margin-top:24px">Resources</h4>
+          <div class="f-links"><a href="communicator.html">School Communicator</a><a href="https://www.gdeadmissions.gov.za" target="_blank">GDE Admissions Portal</a><a href="#">Download Forms</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <div class="f-copy">Â© 2025 Weltevreden Park Primary School &middot; All rights reserved</div>
+      <div class="f-copy">P.O. Box 5964, Weltevreden Park, 1715 &middot; Fax: (011) 679 5644</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var btn = document.getElementById('navBurger');
+    var menu = document.getElementById('navMobile');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+    });
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us &mdash; Weltevreden Park Primary School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       oklch(98% 0.006 80);
+      --surface:  oklch(100% 0 0);
+      --fg:       oklch(22% 0.08 255);
+      --muted:    oklch(52% 0.012 250);
+      --border:   oklch(91% 0.006 250);
+      --accent:   oklch(46% 0.19 258);
+      --accent-d: oklch(36% 0.19 258);
+      --gold:     oklch(68% 0.14 82);
+      --gold-d:   oklch(56% 0.14 78);
+      --dark:     oklch(20% 0.07 255);
+      --font-d:   'Lora', Georgia, serif;
+      --font-b:   'Inter', -apple-system, system-ui, sans-serif;
+      --font-m:   ui-monospace, 'JetBrains Mono', monospace;
+      --r: 8px; --w: 1200px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-b); font-size: 16px; line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; gap: 28px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-logo { width: 42px; height: 42px; object-fit: contain; }
+    .nav-name { display: flex; flex-direction: column; line-height: 1; }
+    .nav-school { font-family: var(--font-d); font-size: 13.5px; font-weight: 600; color: var(--fg); }
+    .nav-motto { font-size: 10.5px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 3px; }
+    .nav-links { display: flex; gap: 2px; flex: 1; justify-content: center; }
+    .nav-links a { padding: 7px 14px; border-radius: var(--r); font-size: 14px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover { color: var(--fg); background: var(--bg); }
+    .nav-links a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: var(--r); background: var(--accent); color: white; font-size: 13.5px; font-weight: 500; transition: background 0.15s; flex-shrink: 0; }
+    .nav-cta:hover { background: var(--accent-d); }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 9px; font-size: 14.5px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; font-family: var(--font-b); }
+    .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-d); border-color: var(--accent-d); }
+    .btn-outline { background: transparent; color: var(--accent); border-color: var(--accent); }
+    .btn-outline:hover { background: var(--accent); color: white; }
+    .btn-gold { background: var(--gold); color: white; border-color: var(--gold); }
+    .btn-gold:hover { background: var(--gold-d); border-color: var(--gold-d); }
+    .btn-lg { padding: 13px 28px; font-size: 15px; border-radius: 10px; }
+
+    /* LAYOUT */
+    .container { max-width: var(--w); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 72px 0; }
+    .section--surface { background: var(--surface); }
+
+    /* SECTION HEADERS */
+    .eyebrow { font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(24px, 2.8vw, 34px); font-weight: 700; line-height: 1.2; color: var(--fg); margin-bottom: 14px; }
+    .section-sub { font-size: 15.5px; color: var(--muted); line-height: 1.7; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background:
+        radial-gradient(ellipse at 90% 10%, oklch(68% 0.14 82 / 0.12) 0%, transparent 55%),
+        linear-gradient(148deg, oklch(42% 0.18 258) 0%, oklch(26% 0.13 272) 100%);
+      padding: 68px 0 60px;
+    }
+    .ph-breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: oklch(70% 0.008 255); margin-bottom: 20px; }
+    .ph-breadcrumb a { color: oklch(80% 0.10 82); }
+    .ph-breadcrumb span { opacity: 0.5; }
+    .ph-eyebrow { font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; color: oklch(80% 0.10 82); margin-bottom: 10px; }
+    .ph-title { font-family: var(--font-d); font-size: clamp(30px, 3.5vw, 46px); font-weight: 700; color: white; line-height: 1.15; margin-bottom: 12px; }
+    .ph-sub { font-size: 15.5px; color: oklch(87% 0.005 240); max-width: 520px; line-height: 1.65; }
+
+    /* CONTACT CARDS */
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .c-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+    .c-card--full { grid-column: span 3; }
+    .c-icon { width: 44px; height: 44px; border-radius: 10px; background: oklch(46% 0.19 258 / 0.10); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; color: var(--accent); }
+    .c-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+    .c-value { font-size: 15px; font-weight: 500; color: var(--fg); line-height: 1.6; }
+    .c-value a { color: var(--accent); }
+    .c-value a:hover { text-decoration: underline; }
+    .c-note { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+    /* HOURS TABLE */
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+    .hours-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .hours-card h4 { font-family: var(--font-d); font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+    .hours-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: var(--muted); }
+    .hours-time { font-weight: 500; }
+    .hours-time.closed { color: var(--muted); font-weight: 400; }
+    .hours-time.tbc { color: var(--gold-d); }
+
+    /* MAP PLACEHOLDER */
+    .map-placeholder {
+      background: linear-gradient(145deg, oklch(92% 0.012 258) 0%, oklch(88% 0.016 258) 100%);
+      border-radius: 14px; overflow: hidden;
+      height: 360px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .map-label { font-family: var(--font-m); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    .map-address { font-family: var(--font-d); font-size: 17px; font-weight: 600; color: var(--fg); margin-top: 10px; }
+    .map-pin { margin-bottom: 12px; color: var(--accent); }
+
+    /* CONTACT FORM */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+    .form-group:last-of-type { margin-bottom: 0; }
+    label { font-size: 13.5px; font-weight: 500; color: var(--fg); }
+    input, select, textarea {
+      width: 100%; padding: 11px 14px; border-radius: var(--r);
+      border: 1px solid var(--border); background: var(--surface);
+      font-family: var(--font-b); font-size: 14.5px; color: var(--fg);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px oklch(46% 0.19 258 / 0.12);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+    select { cursor: pointer; }
+    .form-note { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+    /* PRE-PRIMARY SECTION */
+    .preschool-card { background: oklch(46% 0.19 258 / 0.05); border: 1px solid oklch(46% 0.19 258 / 0.18); border-radius: 14px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 40px; }
+    .ps-detail { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; font-size: 14px; color: var(--muted); }
+    .ps-detail svg { flex-shrink: 0; color: var(--accent); margin-top: 1px; }
+
+    /* FOOTER */
+    footer { background: oklch(18% 0.07 255); color: oklch(80% 0.006 250); }
+    .footer-main { padding: 60px 0 44px; }
+    .footer-grid { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.4fr; gap: 40px; }
+    .f-logo { width: 50px; margin-bottom: 14px; }
+    .f-name { font-family: var(--font-d); font-size: 17px; font-weight: 600; color: white; margin-bottom: 4px; }
+    .f-motto { font-size: 11.5px; color: oklch(58% 0.010 250); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+    .f-line { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: oklch(70% 0.008 250); margin-bottom: 9px; }
+    .f-line svg { flex-shrink: 0; margin-top: 2px; }
+    .f-col h4 { font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; color: oklch(55% 0.010 250); margin-bottom: 16px; font-weight: 600; }
+    .f-links { display: flex; flex-direction: column; gap: 9px; }
+    .f-links a { font-size: 13.5px; color: oklch(70% 0.008 250); transition: color 0.15s; }
+    .f-links a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid oklch(32% 0.06 255); padding: 20px 0; display: flex; justify-content: space-between; }
+    .f-copy { font-size: 12px; color: oklch(50% 0.009 250); }
+
+    @media (max-width: 1024px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .c-card--full { grid-column: span 2; }
+      .form-grid { grid-template-columns: 1fr; }
+      .preschool-card { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .section { padding: 48px 0; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .c-card--full { grid-column: span 1; }
+      .hours-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* HAMBURGER / MOBILE NAV */
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; padding: 8px; border: none; background: none; cursor: pointer; margin-left: auto; border-radius: var(--r); transition: background 0.15s; }
+    .nav-burger:hover { background: var(--bg); }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px oklch(22% 0.08 255 / 0.10); z-index: 99; padding: 12px 16px 20px; }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a { display: block; padding: 11px 14px; border-radius: var(--r); font-size: 15px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-mobile a:hover { color: var(--fg); background: var(--bg); }
+    .nav-mobile a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-mobile .nav-mobile-cta { display: block; margin-top: 10px; padding: 12px 18px; background: var(--accent); color: white; border-radius: var(--r); font-size: 14.5px; font-weight: 500; text-align: center; }
+    .nav-mobile .nav-mobile-cta:hover { background: var(--accent-d); }
+    @media (max-width: 640px) {
+      .nav-burger { display: flex; }
+      .nav { position: sticky; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="WPPS Crest">
+      <div class="nav-name">
+        <span class="nav-school">Weltevreden Park Primary</span>
+        <span class="nav-motto">Growth in Harmony</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+      <li><a href="fees.html">School Fees</a></li>
+      <li><a href="terms.html">School Terms</a></li>
+      <li><a href="communicator.html">Communicator</a></li>
+      <li><a href="contact.html" class="active">Contact Us</a></li>
+    </ul>
+    <a class="nav-cta" href="admissions.html">Apply for 2027</a>
+  </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+
+      <a href="index.html">Home</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="fees.html">School Fees</a>
+      <a href="terms.html">School Terms</a>
+      <a href="communicator.html">Communicator</a>
+      <a href="contact.html" class="active">Contact Us</a>
+      <a href="admissions.html" class="nav-mobile-cta">Apply for 2027</a>
+    </div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="ph-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>&rsaquo;</span>
+      <span>Contact Us</span>
+    </div>
+    <div class="ph-eyebrow">We'd Love to Hear From You</div>
+    <h1 class="ph-title">Get in Touch</h1>
+    <p class="ph-sub">Our office team is here to help with admissions enquiries, general questions, and anything else you need to know about Welties.</p>
+  </div>
+</div>
+
+<!-- CONTACT DETAILS -->
+<section class="section section--surface">
+  <div class="container">
+    <div class="eyebrow">Contact Details</div>
+    <h2 class="section-title">Reach the School</h2>
+    <p class="section-sub">Multiple ways to get in touch &mdash; choose what works best for you.</p>
+
+    <div class="contact-grid">
+      <div class="c-card">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="c-label">Physical Address</div>
+        <div class="c-value">41 Cockspur Road<br>Weltevreden Park<br>Johannesburg, 1709</div>
+        <div class="c-note">Postal: P.O. Box 5964, Weltevreden Park, 1715</div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg></div>
+        <div class="c-label">Telephone</div>
+        <div class="c-value">
+          <a href="tel:+27116795625">(011) 679 5625/6</a><br>
+          <a href="tel:+27114755451">(011) 475 5451/7937</a>
+        </div>
+        <div class="c-note">Fax: (011) 679 5644</div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="c-label">Email</div>
+        <div class="c-value"><a href="mailto:admin@welties.org.za">admin@welties.org.za</a></div>
+        <div class="c-note" style="margin-top:14px">Pre-Primary enquiries:</div>
+        <div class="c-value" style="margin-top:4px"><a href="mailto:preschool@welties.org.za">preschool@welties.org.za</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP + HOURS -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start">
+      <div>
+        <div class="eyebrow">Find Us</div>
+        <h2 class="section-title">Location</h2>
+        <p class="section-sub" style="margin-bottom:24px">Located in the heart of Weltevreden Park, Johannesburg &mdash; easy to reach from the surrounding suburbs.</p>
+        <div class="map-placeholder">
+          <svg class="map-pin" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="map-address">41 Cockspur Road</div>
+          <div class="map-label" style="margin-top:4px">Weltevreden Park, Johannesburg &mdash; Map placeholder</div>
+          <a href="#" style="margin-top:18px;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:var(--accent);color:white;font-size:13.5px;font-weight:500" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">Office Hours</div>
+        <h2 class="section-title" style="font-size:22px">Trading Hours</h2>
+        <div class="hours-card">
+          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time tbc">To be confirmed</span></div>
+          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time tbc">To be confirmed</span></div>
+          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time tbc">To be confirmed</span></div>
+          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time tbc">To be confirmed</span></div>
+          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time tbc">To be confirmed</span></div>
+          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time closed">Closed</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time closed">Closed</span></div>
+        </div>
+        <div style="font-size:13px;color:var(--muted);margin-top:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+          <strong style="color:var(--fg)">Pre-Primary hours:</strong> Monday &mdash; Friday, 07h30 &mdash; 13h00
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRE-PRIMARY CONTACT -->
+<section class="section section--surface">
+  <div class="container">
+    <div class="eyebrow">Pre-Primary School</div>
+    <h2 class="section-title">Grade R &mdash; Welties Pre-Primary</h2>
+    <p class="section-sub">Our Grade R programme is run from a separate campus. Contact the pre-primary team directly for all Grade R enquiries.</p>
+    <div class="preschool-card">
+      <div>
+        <div class="ps-detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>15 Krinkhout Avenue, Weltevreden Park, 1709</div>
+        <div class="ps-detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>(011) 679 5625 <span style="color:var(--muted);font-size:13px">Ext. 8</span></div>
+        <div class="ps-detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:preschool@welties.org.za" style="color:var(--accent)">preschool@welties.org.za</a></div>
+        <div class="ps-detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>School hours: 07h30 &mdash; 13h00 (no aftercare)</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-d);font-size:18px;font-weight:600;margin-bottom:10px">Enquiries for 2026</div>
+        <p style="font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:20px">Applications for Grade R 2026 open on 24 July 2025. Contact the pre-primary directly to be placed on the enquiry list and receive application details.</p>
+        <a href="mailto:preschool@welties.org.za" class="btn btn-gold">Email Pre-Primary</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRY FORM -->
+<section class="section">
+  <div class="container">
+    <div class="form-grid">
+      <div>
+        <div class="eyebrow">Send a Message</div>
+        <h2 class="section-title">General Enquiry Form</h2>
+        <p class="section-sub" style="margin-bottom:8px">Use this form for general enquiries. For admissions, Grade R, or urgent matters, please phone or email directly.</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:16px">
+          <strong style="color:var(--fg)">Admissions queries:</strong><br>
+          <a href="mailto:admin@welties.org.za" style="color:var(--accent)">admin@welties.org.za</a> &middot; (011) 679 5625
+        </p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:12px">
+          <strong style="color:var(--fg)">Pre-Primary (Grade R):</strong><br>
+          <a href="mailto:preschool@welties.org.za" style="color:var(--accent)">preschool@welties.org.za</a> &middot; (011) 679 5625 Ext. 8
+        </p>
+      </div>
+      <form style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px" onsubmit="return false">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Your first name">
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Your last name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="(011) 000 0000">
+        </div>
+        <div class="form-group">
+          <label for="subject">Enquiry Type</label>
+          <select id="subject">
+            <option value="" disabled selected>Select a topic&hellip;</option>
+            <option>Admissions &mdash; Grade 1</option>
+            <option>Admissions &mdash; Grades 2&mdash;7</option>
+            <option>Grade R / Pre-Primary</option>
+            <option>School Fees</option>
+            <option>General Information</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us how we can help&hellip;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">Send Enquiry</button>
+        <div class="form-note" style="margin-top:10px;text-align:center">We aim to respond within 1&mdash;2 school days.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="f-logo" src="assets/logo.png" alt="WPPS Crest">
+          <div class="f-name">Weltevreden Park Primary School</div>
+          <div class="f-motto">Growth in Harmony &middot; Est. 1987</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>41 Cockspur Road, Weltevreden Park, 1709</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>(011) 679 5625/6 &middot; (011) 475 5451/7937</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>admin@welties.org.za</div>
+        </div>
+        <div class="f-col">
+          <h4>Navigate</h4>
+          <div class="f-links">
+            <a href="index.html">Home</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="fees.html">School Fees</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="f-col">
+          <h4>School</h4>
+          <div class="f-links">
+            <a href="#">Our History</a>
+            <a href="#">Management Team</a>
+            <a href="#">Mission Statement</a>
+            <a href="#">Code of Conduct</a>
+          </div>
+        </div>
+        <div class="f-col">
+          <h4>Pre-Primary</h4>
+          <div class="f-links">
+            <a href="admissions.html#grader">Grade R Admissions</a>
+            <a href="fees.html#grader-fees">Grade R Fees</a>
+            <a href="contact.html">Contact Pre-Primary</a>
+          </div>
+          <h4 style="margin-top:24px">Resources</h4>
+          <div class="f-links">
+            <a href="communicator.html">School Communicator</a>
+            <a href="https://www.gdeadmissions.gov.za" target="_blank">GDE Admissions Portal</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <div class="f-copy">Â© 2025 Weltevreden Park Primary School &middot; All rights reserved</div>
+      <div class="f-copy">P.O. Box 5964, Weltevreden Park, 1715 &middot; Fax: (011) 679 5644</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var btn = document.getElementById('navBurger');
+    var menu = document.getElementById('navMobile');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+    });
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      });
+    });
+  })();
+</script>
+</body>
+</html>

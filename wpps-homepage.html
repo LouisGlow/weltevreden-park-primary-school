@@ -1,0 +1,496 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weltevreden Park Primary School &mdash; Growth in Harmony</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       oklch(98% 0.006 80);
+      --surface:  oklch(100% 0 0);
+      --fg:       oklch(22% 0.08 255);
+      --muted:    oklch(52% 0.012 250);
+      --border:   oklch(91% 0.006 250);
+      --accent:   oklch(46% 0.19 258);
+      --accent-d: oklch(36% 0.19 258);
+      --gold:     oklch(68% 0.14 82);
+      --gold-d:   oklch(56% 0.14 78);
+      --red:      oklch(60% 0.20 38);
+      --dark:     oklch(20% 0.07 255);
+      --font-d:   'Lora', Georgia, serif;
+      --font-b:   'Inter', -apple-system, system-ui, sans-serif;
+      --font-m:   ui-monospace, 'JetBrains Mono', monospace;
+      --r: 8px;
+      --w: 1200px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-b); font-size: 16px; line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; gap: 28px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-logo { width: 42px; height: 42px; object-fit: contain; }
+    .nav-name { display: flex; flex-direction: column; line-height: 1; }
+    .nav-school { font-family: var(--font-d); font-size: 13.5px; font-weight: 600; color: var(--fg); }
+    .nav-motto { font-size: 10.5px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 3px; }
+    .nav-links { display: flex; gap: 2px; flex: 1; justify-content: center; }
+    .nav-links a { padding: 7px 14px; border-radius: var(--r); font-size: 14px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-links a:hover { color: var(--fg); background: var(--bg); }
+    .nav-links a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: var(--r); background: var(--accent); color: white; font-size: 13.5px; font-weight: 500; transition: background 0.15s; flex-shrink: 0; }
+    .nav-cta:hover { background: var(--accent-d); }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 9px; font-size: 14.5px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; font-family: var(--font-b); }
+    .btn-gold { background: var(--gold); color: white; border-color: var(--gold); }
+    .btn-gold:hover { background: var(--gold-d); border-color: var(--gold-d); }
+    .btn-ghost-white { background: transparent; color: white; border-color: oklch(100% 0 0 / 0.45); }
+    .btn-ghost-white:hover { background: white; color: var(--accent-d); border-color: white; }
+    .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-d); border-color: var(--accent-d); }
+    .btn-outline { background: transparent; color: var(--accent); border-color: var(--accent); }
+    .btn-outline:hover { background: var(--accent); color: white; }
+    .btn-lg { padding: 13px 28px; font-size: 15px; border-radius: 10px; }
+
+    .container { max-width: var(--w); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+    .section--surface { background: var(--surface); }
+    .section--dark { background: var(--dark); }
+
+    .eyebrow { font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(26px, 3vw, 36px); font-weight: 700; line-height: 1.2; color: var(--fg); margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+    .hero {
+      min-height: 580px;
+      background:
+        radial-gradient(ellipse at 85% 15%, oklch(68% 0.14 82 / 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 5% 90%, oklch(60% 0.20 38 / 0.08) 0%, transparent 45%),
+        linear-gradient(148deg, oklch(42% 0.18 258) 0%, oklch(26% 0.13 272) 100%);
+      display: flex; align-items: center;
+    }
+    .hero-inner { max-width: var(--w); margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 5fr 4fr; gap: 60px; align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: oklch(68% 0.14 82 / 0.18); border: 1px solid oklch(68% 0.14 82 / 0.35); color: oklch(90% 0.08 82); padding: 5px 14px; border-radius: 100px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; margin-bottom: 22px; }
+    .hero-title { font-family: var(--font-d); font-size: clamp(34px, 3.8vw, 52px); font-weight: 700; line-height: 1.13; color: white; margin-bottom: 18px; letter-spacing: -0.01em; }
+    .hero-sub { font-size: 16.5px; color: oklch(88% 0.005 240); line-height: 1.72; margin-bottom: 34px; max-width: 500px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-crest-panel { display: flex; justify-content: center; align-items: center; }
+    .hero-crest-card { width: 220px; background: oklch(100% 0 0 / 0.07); border: 1px solid oklch(100% 0 0 / 0.16); border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; backdrop-filter: blur(8px); }
+    .hero-crest-card img { width: 110px; filter: brightness(1.05); }
+    .hero-crest-divider { width: 40px; height: 1px; background: oklch(100% 0 0 / 0.25); }
+    .hero-crest-motto { font-family: var(--font-d); font-size: 12px; color: oklch(80% 0.008 240); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+
+    .stats-bar { background: var(--accent); }
+    .stats-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; display: flex; }
+    .stat { flex: 1; padding: 22px 16px; text-align: center; border-right: 1px solid oklch(60% 0.19 258 / 0.4); color: white; }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-family: var(--font-d); font-size: 28px; font-weight: 700; line-height: 1; display: block; }
+    .stat-l { font-size: 11px; opacity: 0.75; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 5px; display: block; }
+
+    .about-grid { display: grid; grid-template-columns: 360px 1fr; gap: 64px; align-items: start; }
+    .about-photo { width: 100%; aspect-ratio: 3/4; max-height: 480px; border-radius: 14px; overflow: hidden; background: linear-gradient(165deg, oklch(90% 0.012 258) 0%, oklch(84% 0.018 260) 100%); display: flex; align-items: flex-end; justify-content: center; }
+    .about-photo-label { width: 100%; padding: 14px 16px; background: oklch(22% 0.08 255 / 0.5); font-family: var(--font-m); font-size: 10.5px; color: oklch(88% 0.005 250); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+    .about-caption { margin-top: 12px; }
+    .about-name { font-family: var(--font-d); font-size: 17px; font-weight: 600; }
+    .about-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .about-text blockquote { border-left: 3px solid var(--gold); padding: 4px 0 4px 20px; margin: 24px 0; font-family: var(--font-d); font-style: italic; font-size: 17px; line-height: 1.7; color: var(--fg); }
+    .about-text p { color: var(--muted); line-height: 1.75; margin-bottom: 14px; font-size: 15.5px; }
+    .goals { margin-top: 28px; }
+    .goals h4 { font-family: var(--font-d); font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+    .goals ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+    .goals li { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+    .prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+    .prog-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
+    .prog-card:hover { box-shadow: 0 6px 28px oklch(22% 0.08 255 / 0.09); transform: translateY(-3px); }
+    .prog-icon { width: 46px; height: 46px; border-radius: 10px; background: oklch(46% 0.19 258 / 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .prog-name { font-family: var(--font-d); font-size: 15.5px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+    .prog-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+    .prog-more { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--accent); margin-top: 16px; transition: gap 0.15s; }
+    .prog-more:hover { gap: 8px; text-decoration: underline; }
+
+    .houses-header { text-align: center; }
+    .houses-header .eyebrow { color: oklch(80% 0.10 82); }
+    .houses-header .section-title { color: white; }
+    .houses-header .section-sub { color: oklch(68% 0.008 250); margin: 0 auto; }
+    .houses-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+    .house-card { border-radius: 14px; padding: 36px 24px; text-align: center; transition: transform 0.2s; }
+    .house-card:hover { transform: translateY(-4px); }
+    .house-initial { width: 60px; height: 60px; border-radius: 50%; background: oklch(100% 0 0 / 0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-family: var(--font-d); font-size: 26px; font-weight: 700; color: white; }
+    .house-name { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .house-sub { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(100% 0 0 / 0.6); }
+    .h-falcons  { background: oklch(44% 0.22 25); }
+    .h-eagles   { background: oklch(44% 0.20 258); }
+    .h-hawks    { background: oklch(38% 0.18 150); }
+    .h-kestrels { background: oklch(50% 0.17 78); }
+
+    .terms-wrap { display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+    .terms-table-outer { margin-top: 36px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: var(--fg); color: white; padding: 13px 20px; text-align: left; font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; }
+    td { padding: 13px 20px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: var(--bg); }
+    .term-badge { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: white; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+    .terms-aside { padding-top: 36px; }
+    .terms-aside h4 { font-family: var(--font-d); font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+    .terms-note { background: oklch(46% 0.19 258 / 0.06); border: 1px solid oklch(46% 0.19 258 / 0.16); border-radius: 10px; padding: 18px; font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .terms-note p { margin-bottom: 10px; }
+    .terms-note p:last-child { margin-bottom: 0; }
+
+    .ql-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+    .ql-item { display: flex; align-items: center; gap: 12px; padding: 15px 18px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--fg); font-size: 14px; font-weight: 500; transition: border-color 0.15s, color 0.15s, box-shadow 0.15s; }
+    .ql-item:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 2px 12px oklch(46% 0.19 258 / 0.10); }
+    .ql-icon { color: var(--accent); flex-shrink: 0; }
+
+    .cta-banner {
+      background:
+        radial-gradient(ellipse at 90% 50%, oklch(68% 0.14 82 / 0.12) 0%, transparent 55%),
+        linear-gradient(148deg, oklch(42% 0.18 258) 0%, oklch(26% 0.13 272) 100%);
+      padding: 72px 0;
+    }
+    .cta-inner { max-width: var(--w); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .cta-title { font-family: var(--font-d); font-size: clamp(24px, 2.8vw, 34px); font-weight: 700; color: white; line-height: 1.2; margin-bottom: 10px; }
+    .cta-sub { font-size: 15.5px; color: oklch(84% 0.006 240); line-height: 1.65; max-width: 480px; }
+    .cta-actions { display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap; }
+
+    footer { background: oklch(18% 0.07 255); color: oklch(80% 0.006 250); }
+    .footer-main { padding: 60px 0 44px; }
+    .footer-grid { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1.4fr; gap: 40px; }
+    .f-logo { width: 50px; margin-bottom: 14px; }
+    .f-name { font-family: var(--font-d); font-size: 17px; font-weight: 600; color: white; margin-bottom: 4px; }
+    .f-motto { font-size: 11.5px; color: oklch(58% 0.010 250); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+    .f-line { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: oklch(70% 0.008 250); margin-bottom: 9px; }
+    .f-line svg { flex-shrink: 0; margin-top: 2px; }
+    .f-col h4 { font-size: 10.5px; letter-spacing: 0.10em; text-transform: uppercase; color: oklch(55% 0.010 250); margin-bottom: 16px; font-weight: 600; }
+    .f-links { display: flex; flex-direction: column; gap: 9px; }
+    .f-links a { font-size: 13.5px; color: oklch(70% 0.008 250); transition: color 0.15s; }
+    .f-links a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid oklch(32% 0.06 255); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+    .f-copy { font-size: 12px; color: oklch(50% 0.009 250); }
+
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-crest-panel { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo { max-height: 280px; aspect-ratio: 16/9; }
+      .prog-grid { grid-template-columns: repeat(2, 1fr); }
+      .houses-grid { grid-template-columns: repeat(2, 1fr); }
+      .terms-wrap { grid-template-columns: 1fr; }
+      .ql-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .cta-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .section { padding: 48px 0; }
+      .hero-inner { padding: 56px 20px; }
+      .stats-inner { flex-wrap: wrap; }
+      .stat { flex: 0 0 50%; }
+      .stat:nth-child(2), .stat:nth-child(4) { border-right: none; }
+      .prog-grid { grid-template-columns: 1fr; }
+      .houses-grid { grid-template-columns: 1fr 1fr; }
+      .ql-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* HAMBURGER / MOBILE NAV */
+    .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; padding: 8px; border: none; background: none; cursor: pointer; margin-left: auto; border-radius: var(--r); transition: background 0.15s; }
+    .nav-burger:hover { background: var(--bg); }
+    .nav-burger span { display: block; width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px oklch(22% 0.08 255 / 0.10); z-index: 99; padding: 12px 16px 20px; }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a { display: block; padding: 11px 14px; border-radius: var(--r); font-size: 15px; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+    .nav-mobile a:hover { color: var(--fg); background: var(--bg); }
+    .nav-mobile a.active { color: var(--accent); background: oklch(46% 0.19 258 / 0.06); }
+    .nav-mobile .nav-mobile-cta { display: block; margin-top: 10px; padding: 12px 18px; background: var(--accent); color: white; border-radius: var(--r); font-size: 14.5px; font-weight: 500; text-align: center; }
+    .nav-mobile .nav-mobile-cta:hover { background: var(--accent-d); }
+    @media (max-width: 640px) {
+      .nav-burger { display: flex; }
+      .nav { position: sticky; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="WPPS Crest">
+      <div class="nav-name">
+        <span class="nav-school">Weltevreden Park Primary</span>
+        <span class="nav-motto">Growth in Harmony</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="admissions.html">Admissions</a></li>
+      <li><a href="fees.html">School Fees</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <a class="nav-cta" href="admissions.html">Apply for 2027</a>
+  </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+
+      <a href="index.html" class="active">Home</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="fees.html">School Fees</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="admissions.html" class="nav-mobile-cta">Apply for 2027</a>
+    </div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Est. 1987 &middot; Weltevreden Park, Johannesburg</div>
+      <h1 class="hero-title">Weltevreden Park<br>Primary School</h1>
+      <p class="hero-sub">A community built on excellence &mdash; developing well-rounded learners through quality education, strong values, and joyful school life from Grade R to Grade 7.</p>
+      <div class="hero-actions">
+        <a href="admissions.html" class="btn btn-gold btn-lg">Apply for 2027</a>
+        <a href="#about" class="btn btn-ghost-white btn-lg">Learn About Us</a>
+      </div>
+    </div>
+    <div class="hero-crest-panel">
+      <div class="hero-crest-card">
+        <img src="assets/logo.png" alt="Weltevreden Park Primary School Crest">
+        <div class="hero-crest-divider"></div>
+        <div class="hero-crest-motto">Growth in Harmony</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-n">1987</span><span class="stat-l">Established</span></div>
+    <div class="stat"><span class="stat-n">R &mdash; 7</span><span class="stat-l">Grade Range</span></div>
+    <div class="stat"><span class="stat-n">4</span><span class="stat-l">Sports Houses</span></div>
+    <div class="stat"><span class="stat-n">108</span><span class="stat-l">Grade R Learners</span></div>
+    <div class="stat"><span class="stat-n">6</span><span class="stat-l">Principals to Date</span></div>
+  </div>
+</div>
+
+<section class="section section--surface" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="about-photo">
+          <div class="about-photo-label">Photo &mdash; Mr J. Van Dyk, Principal</div>
+        </div>
+        <div class="about-caption">
+          <div class="about-name">Mr J. Van Dyk</div>
+          <div class="about-role">Principal &middot; 6th Principal of WPPS since 2016</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow">A Message from the Principal</div>
+        <h2 class="section-title">A Place Where Every Child Grows</h2>
+        <blockquote>"With a dedicated and professional staff and a committed parent body, WPPS strives to provide quality education and develop social skills through maximum involvement, self-discipline and effort."</blockquote>
+        <p>Since opening its doors on 7 January 1987 with 209 learners, Weltevreden Park Primary School has grown into a cornerstone of this community. What began with filing done out of apple boxes and sheep grazing the playing fields has become a school of excellence and tradition.</p>
+        <p>Mr Van Dyk became our sixth principal during the second term of 2016, continuing a legacy that spans nearly four decades. He leads both the primary and pre-primary divisions with the same commitment our founders instilled from day one.</p>
+        <div class="goals">
+          <h4>Our Seven Goals</h4>
+          <ol>
+            <li>Delivering the highest quality education available</li>
+            <li>Emphasising social development for well-rounded growth</li>
+            <li>Maintaining professional educators who respect individual learners</li>
+            <li>Prioritising creativity and lateral thinking in curricula</li>
+            <li>Encouraging high standards through self-discipline and effort</li>
+            <li>Fostering robust parental participation and community awareness</li>
+            <li>Developing comprehensive extramural activities for balanced education</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="programmes">
+  <div class="container">
+    <div class="eyebrow">What We Offer</div>
+    <h2 class="section-title">Programmes &amp; Services</h2>
+    <p class="section-sub">From Grade R to Grade 7, our programmes support every stage of your child's journey &mdash; academic, social, and beyond.</p>
+    <div class="prog-grid">
+      <div class="prog-card">
+        <div class="prog-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <div class="prog-name">Primary School<br>Grades 1 &mdash; 7</div>
+        <p class="prog-desc">Quality education developing academic excellence and strong social skills through maximum involvement, self-discipline, and effort.</p>
+        <a href="admissions.html" class="prog-more">Admissions info <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></div>
+        <div class="prog-name">Grade R<br>Pre-Primary</div>
+        <p class="prog-desc">Four Grade R classes with 27 learners each. School hours 07h30&mdash;13h00. Applications for 2026 open 24 July 2025.</p>
+        <a href="admissions.html#grader" class="prog-more">Grade R info <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M20 21a8 8 0 1 0-16 0"/><line x1="12" y1="11" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="14"/></svg></div>
+        <div class="prog-name">Extra-Curricular<br>Activities</div>
+        <p class="prog-desc">A comprehensive programme of co-curricular activities contributing to balanced, holistic education and house spirit for every learner.</p>
+        <a href="#houses" class="prog-more">Our houses <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="prog-name">School<br>Communicator</div>
+        <p class="prog-desc">Stay connected via our electronic parent communication tool. Download the app and never miss an announcement or school update.</p>
+        <a href="http://www.school-communicator.com/download.php" target="_blank" class="prog-more">Download app <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark" id="houses">
+  <div class="container">
+    <div class="houses-header">
+      <div class="eyebrow">School Spirit</div>
+      <h2 class="section-title">Our Four Houses</h2>
+      <p class="section-sub">Representing pride, competition, and camaraderie &mdash; every Welties learner belongs to a house from day one.</p>
+    </div>
+    <div class="houses-grid">
+      <div class="house-card h-falcons"><div class="house-initial">F</div><div class="house-name">Falcons</div><div class="house-sub">Est. 1988 &middot; formerly Martians</div></div>
+      <div class="house-card h-eagles"><div class="house-initial">E</div><div class="house-name">Eagles</div><div class="house-sub">Est. 1988 &middot; formerly Quasars</div></div>
+      <div class="house-card h-hawks"><div class="house-initial">H</div><div class="house-name">Hawks</div><div class="house-sub">Est. 1988 &middot; formerly Comets</div></div>
+      <div class="house-card h-kestrels"><div class="house-initial">K</div><div class="house-name">Kestrels</div><div class="house-sub">Added 1993</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--surface" id="terms">
+  <div class="container">
+    <div class="terms-wrap">
+      <div>
+        <div class="eyebrow">Academic Calendar</div>
+        <h2 class="section-title">School Terms 2026</h2>
+        <p class="section-sub" style="margin-bottom:0">Plan ahead with the official Gauteng Department of Education term dates for 2026.</p>
+        <div class="terms-table-outer">
+          <table>
+            <thead><tr><th>Term</th><th>Start Date</th><th>End Date</th></tr></thead>
+            <tbody>
+              <tr><td><span class="term-badge">1</span></td><td>14 January 2026</td><td>27 March 2026</td></tr>
+              <tr><td><span class="term-badge">2</span></td><td>8 April 2026</td><td>26 June 2026</td></tr>
+              <tr><td><span class="term-badge">3</span></td><td>21 July 2026</td><td>23 September 2026</td></tr>
+              <tr><td><span class="term-badge">4</span></td><td>6 October 2026</td><td>9 December 2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="terms-aside">
+        <h4>Important Dates</h4>
+        <div class="terms-note">
+          <p><strong>Grade 1 applications</strong> for 2026 open on <strong>24 July 2025</strong> and close 29 August 2025. Apply online at gdeadmissions.gov.za.</p>
+          <p><strong>Grade R applications</strong> also open 24 July 2025. Contact the pre-primary on Ext. 8 for more.</p>
+          <p>School fees may be paid in 10 monthly instalments or as a lump sum with early-payment discounts of up to 12%.</p>
+        </div>
+        <a href="admissions.html" class="btn btn-primary" style="margin-top:20px;display:inline-flex">Admissions Guide &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="eyebrow">Useful Resources</div>
+    <h2 class="section-title">Quick Links</h2>
+    <div class="ql-grid">
+      <a href="admissions.html" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Admissions Information</a>
+      <a href="fees.html" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>School Fees 2026</a>
+      <a href="contact.html" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>Contact Us</a>
+      <a href="#" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>School Management Team</a>
+      <a href="#about" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Our Mission Statement</a>
+      <a href="#" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Code of Conduct</a>
+      <a href="admissions.html#grader" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Welties Pre-Primary</a>
+      <a href="http://www.school-communicator.com/download.php" target="_blank" class="ql-item"><svg class="ql-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>School Communicator</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="cta-inner">
+    <div>
+      <div class="eyebrow" style="color:oklch(80% 0.10 82)">Join the Welties Family</div>
+      <div class="cta-title">Applications for 2026 Are Now Open</div>
+      <p class="cta-sub">Grade 1 applications close 29 August 2025. Apply online via the GDE portal &mdash; then collect your school application form from our office.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="admissions.html" class="btn btn-gold btn-lg">Admissions Guide</a>
+      <a href="contact.html" class="btn btn-ghost-white btn-lg">Contact the School</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="f-logo" src="assets/logo.png" alt="WPPS Crest">
+          <div class="f-name">Weltevreden Park Primary School</div>
+          <div class="f-motto">Growth in Harmony &middot; Est. 1987</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>41 Cockspur Road, Weltevreden Park, 1709</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>(011) 679 5625/6 &middot; (011) 475 5451/7937</div>
+          <div class="f-line"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>admin@welties.org.za</div>
+        </div>
+        <div class="f-col">
+          <h4>Navigate</h4>
+          <div class="f-links"><a href="index.html">Home</a><a href="admissions.html">Admissions</a><a href="fees.html">School Fees</a><a href="#terms">School Terms</a><a href="contact.html">Contact Us</a></div>
+        </div>
+        <div class="f-col">
+          <h4>School</h4>
+          <div class="f-links"><a href="#">Our History</a><a href="#">Management Team</a><a href="#">Our Staff</a><a href="#about">Mission Statement</a><a href="#">Code of Conduct</a></div>
+        </div>
+        <div class="f-col">
+          <h4>Pre-Primary</h4>
+          <div class="f-links"><a href="admissions.html#grader">Grade R Admissions</a><a href="fees.html#grader-fees">Grade R Fees</a><a href="contact.html">Contact Pre-Primary</a></div>
+          <h4 style="margin-top:24px">Resources</h4>
+          <div class="f-links"><a href="http://www.school-communicator.com/download.php" target="_blank">School Communicator</a><a href="https://www.gdeadmissions.gov.za" target="_blank">GDE Admissions Portal</a><a href="#">Download Forms</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <div class="f-copy">Â© 2025 Weltevreden Park Primary School &middot; All rights reserved</div>
+      <div class="f-copy">P.O. Box 5964, Weltevreden Park, 1715 &middot; Fax: (011) 679 5644</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var btn = document.getElementById('navBurger');
+    var menu = document.getElementById('navMobile');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+    });
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
